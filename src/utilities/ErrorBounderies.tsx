@@ -1,15 +1,15 @@
-
+import React from 'react'
 
 interface Props {
     children: React.ReactNode;
     fallBackComponent:React.ReactNode;
     renderCondition?: any;
+    error?:boolean
 }
 interface State {
     hasError:boolean;
     renderCondition?: any;
 }
-import React from 'react'
 
 export default class ErrorBounderies extends React.Component<Props,State>{
     constructor(props:Props){
@@ -26,10 +26,11 @@ export default class ErrorBounderies extends React.Component<Props,State>{
        if(props.renderCondition !== state.renderCondition){
         return { hasError:false, resetCondition:props.renderCondition }
        }
+       return null;
     }
   render() {
 
-    if(this.state.hasError){// da error por falta de la interface para el state
+    if(this.state.hasError || this.props.error ){// da error por falta de la interface para el state
   return this.props.fallBackComponent;
     }
     return this.props.children;
